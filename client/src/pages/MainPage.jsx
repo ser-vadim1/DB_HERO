@@ -28,13 +28,15 @@ const MainPage = () => {
 
   return (
     <MainContainer>
-      {CardHeroArr.length ? (
+      {CardHeroArr.length && isDoneGetRequest ? (
         <LayoutCard
           arrCard={CardHeroArr}
           TotalPages={totalPages}
           ItemsPerPage={ItemsPerPage}
           TotalItem={totalItems}
         />
+      ) : !isDoneGetRequest && !CardHeroArr.length ? (
+        ""
       ) : (
         <MarkerIsNoneCards />
       )}

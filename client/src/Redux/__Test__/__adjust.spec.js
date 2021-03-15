@@ -28,7 +28,7 @@ describe("functionality CreatCard", ()=>{
          loading: "pending", 
          currentRequestId: action.meta.requestId
       }
-      const state = reducer({...RootAdjustHeroDbState, loading: "pending", currentRequestId: action.meta.requestId}, action)
+      const state = reducer(RootAdjustHeroDbState, action)
       expect(state).toEqual(expectedState)
    })
 
@@ -88,4 +88,42 @@ describe("functionality, GetCards", ()=>{
    })
 })
 
-describe("functionality, upDateCard", ()=>{})
+describe("functionality, upDateCard", ()=>{
+   let RootAdjustHeroDbState = store.getState().AdjustHeroDb
+   let expectedState ={}
+
+   test('upDateCard[pending]', ()=>{
+      const action = {type: upDateCard.pending.type, meta:{
+         requestId: "requestId"
+      }}
+      expectedState = {
+         ...RootAdjustHeroDbState, 
+         loading: "pending", 
+         currentRequestId: action.meta.requestId
+      }
+      const state = reducer(RootAdjustHeroDbState, action)
+      expect(state).toEqual(expectedState)
+   })
+   test("upDateCard[fulfilled]", ()=>{
+      const action = {type: upDateCard.fulfilled.type,
+            meta:{
+         requestId: "requestId"
+      }}
+      const state = reducer({...RootAdjustHeroDbState, loading: "pending", currentRequestId: action.meta.requestId}, action)
+      expect(state).toEqual({...expectedState, loading: "idle", currentRequestId: undefined})
+
+   })
+   test("upDateCard[rejected]", ()=>{
+      const action = {type: upDateCard.rejected.type, 
+         payload:{
+           data: {message: "server error"} 
+         },
+         meta: {
+         requestId: "requestId"
+      }}
+
+    const state = reducer({...RootAdjustHeroDbState, loading: "pending", currentRequestId: action.meta.requestId}, action)
+    expect(state).toEqual({...expectedState, loading: "idle", currentRequestId: undefined, error: action.payload.data.message})
+   })
+
+})
