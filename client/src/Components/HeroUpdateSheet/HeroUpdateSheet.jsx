@@ -23,6 +23,7 @@ import {
   GetCardById,
   deletImage,
   uploadImage,
+  upDateImg,
   upDateCard,
   DeleteCard,
 } from "../../Redux/HeroAdjust";
@@ -66,7 +67,9 @@ const HeroUpdateSheet = () => {
     };
     if (file) {
       const compressedFile = await imageCompression(file, options);
-      const resulAction = await Dispatch(uploadImage({ File: compressedFile }));
+      const resulAction = await Dispatch(
+        upDateImg({ idCard: idCard, File: compressedFile })
+      );
 
       if (resulAction.meta.requestStatus === "fulfilled") {
         setOneCard({

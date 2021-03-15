@@ -24,10 +24,6 @@ const MainPage = () => {
     };
 
     Test();
-
-    return () => {
-      setIsDoneRequest(false);
-    };
   }, [Dispatch, pageParams, ItemsPerPage]);
 
   return (

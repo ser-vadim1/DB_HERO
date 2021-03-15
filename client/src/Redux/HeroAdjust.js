@@ -92,6 +92,18 @@ export const DeleteCard = createAsyncThunk("AdjustHeroDb/DeleteCard", async({idC
       return rejectWithValue({data: error.response.data, status: error.response.status})
    }
 })
+
+export const upDateImg = createAsyncThunk("AdjustHeroDb/upDateImg", async ({idCard, File}, {rejectWithValue})=>{
+   let formData = new FormData();
+   formData.append("ImageHero", File)
+   try {
+      let resUpadateImg = await generalRouter.put(`/api/updateImage/?idCard=${idCard}`, formData)
+
+      return resUpadateImg.data
+   } catch (error) {
+      return rejectWithValue({data: error.response.data, status: error.response.status})
+   }
+})
 export const AdjustHeroDbSlice = createSlice({
    name: 'AdjustHeroDb',
    initialState:{
